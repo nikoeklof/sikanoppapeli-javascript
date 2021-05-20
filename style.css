@@ -1,0 +1,22 @@
+body {
+    font-family: 'Poppins';
+    font-size: 1.2em;
+    background-color: rgba(46, 93, 77, 0.767);
+}
+
+.header {
+    padding: 1.5em;
+    margin-top: -1.4em;
+    margin-left: -8px;
+    margin-right: -8px;
+    background-color: rgb(3, 255, 213);
+    text-align: center;
+}
+
+#gameContainer {
+    margin: auto;
+    margin-top: 20px;
+    width: 1200px;
+    height: 700px;
+    border: 3px solid black;
+}
