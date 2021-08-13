@@ -23,19 +23,25 @@ function playerNames() {
 
 function checkIfValid() {
     var x = 0
+
     for (var i = 0; i < playerAmount; i++) {
+        if (players[i] == undefined) {
 
-        if (document.getElementById('playername' + i) == null || document.getElementById('playername' + i).value == "") {
-            array.forEach(element => {
-                
-            });
-            alert("Pelaajalla " + (players.length + 1) + " ei ole nimeä, anna nimi ennenkuin jatkat!")
-            break;
+            alert("Pelaajalla " + (i + 1) + " ei ole nimeä, anna nimi ennenkuin jatkat!")
         } else {
-            x++
+            console.log("all good")
+            x++;
         }
-    }
 
+
+    }
+    if (x >= playerAmount) {
+        diceSetup()
+    }
+}
+
+function diceSetup() {
+    console.log("dice")
 }
 
 
