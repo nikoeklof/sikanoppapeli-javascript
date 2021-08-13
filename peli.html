@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +8,6 @@
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <title>Sikanoppapeli-javascript</title>
 </head>
-
 <body>
     <div class="header">
         <h1>Sikanoppapeli</h1>
@@ -18,9 +16,15 @@
         </div>
     </div>
     <div id="gameContainer">
-        <button id="gameStart" class="btn-game" onclick="playerSetup()">Aloita peli</button>
+        <button class="btn-game" onclick="diceamount = 1, roll()">Heitä 1 noppa</button>
+        <button class="btn-game" onclick="diceamount = 2, roll()">Heitä 2 noppaa</button>
+        
+    </div>
+    <div id="scoreBoard">
+        <h2>Pisteet</h2>
+        <h3><span id="player1Name"> Pelaaja1: </span><span id="player1Score">0</span> <span id="player2Name"> Pelaaja2: <span id="player2Score">0</span></h3>
+        
     </div>
     <script src="main.js"></script>
 </body>
-
 </html>
