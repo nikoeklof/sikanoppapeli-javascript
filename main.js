@@ -2,6 +2,11 @@ var dices = ['<img src="img/dice-1.svg" alt="dice1" width="64px" height="64px">'
 var playerAmount = 0;
 var defaultWinAmount = 100;
 var players = [];
+var diceAmount;
+var playerTurn = 0;
+var firstroll;
+var secondtroll;
+var points = 0;
 
 function playerSetup() {
 
@@ -29,7 +34,7 @@ function checkIfValid() {
 
             alert("Pelaajalla " + (i + 1) + " ei ole nimeä, anna nimi ennenkuin jatkat!")
         } else {
-            console.log("all good")
+
             x++;
         }
 
@@ -41,7 +46,87 @@ function checkIfValid() {
 }
 
 function diceSetup() {
-    console.log("dice")
+    document.getElementById('gameContainer').innerHTML = '<Button class="btn-game" onclick="diceAmount=1, winAmountSetup()">1 Noppa</button> <br> <br> <Button class="btn-game" onclick="diceAmount=2, winAmountSetup()">2 Noppaa</button>'
+}
+
+function winAmountSetup() {
+    document.getElementById('gameContainer').innerHTML = '<label for="winAmount"> Anna pistemäärä mihin peli päättyy, 100 on oletusarvo</label> <br> <br> <input id="winAmount" type=text><button onclick="setWinAmount() ,gameStart()">OK</button>'
+
+}
+
+function gameStart() {
+    if (diceAmount == 1) {
+        startWithOneDice()
+        document.getElementById("gameContainer").innerHTML += '<div id="playerthrowpopup"></div>'
+        document.getElementById("gameContainer").innerHTML += '<div id="potentialPoints"></div>'
+    } else {
+        startWithTwoDice()
+        document.getElementById("gameContainer").innerHTML += '<div id="playerthrowpopup"></div>'
+        document.getElementById("gameContainer").innerHTML += '<div id="potentialPoints"></div>'
+    }
+}
+
+function playerRoll() {
+    document.getElementById("playerthrowpopup").innerHTML = ''
+    document.getElementById("diceContainer").innerHTML = dices[roll()];
+
+    if (document.getElementById("diceContainer").innerHTML == dices[0]) {
+
+        document.getElementById("playerthrowpopup").innerHTML = '<p style="color:red; font-weight: bold;">' + players[playerTurn].name + ' heitti ykkösen! vuoro päättyy </p>'
+        points = 0;
+    } else {
+        switch (firstroll) {
+            case 1:
+                points = points + 2
+                break;
+            case 2:
+                points = points + 3
+                break;
+            case 3:
+                points = points + 4
+                break;
+            case 4:
+                points = points + 5
+                break;
+            case 5:
+                points = points + 6
+                break;
+
+        }
+        document.getElementById('potentialPoints').innerHTML = '<br> <p> Tämän vuoron mahdolliset pisteet: ' + points + '</p>'
+
+
+
+    }
+}
+
+function startWithOneDice() {
+    document.getElementById("gameContainer").innerHTML = '<div id="diceContainer"></div> <br> <div id="playerContainer"></div>'
+    document.getElementById('playerContainer').innerHTML = '<h2>Pisteet:</h2> <br>'
+    for (let i = 0; i < playerAmount; i++) {
+        document.getElementById("playerContainer").innerHTML += '<span id="player' + i + '">' + players[i].name + ': </span> <span id="player' + i + '">' + players[i].points + '</span> <br>'
+    }
+    document.getElementById("diceContainer").innerHTML = dices[roll()];
+    document.getElementById("gameContainer").innerHTML += '<br><br><button class="btn-game" onclick="playerRoll()">Heitä</button> <button class="btn-game" onclick"endTurn()>Lopeta vuoro</button> '
+}
+
+function setWinAmount() {
+    var winAmount = document.getElementById('winAmount').value
+    if (winAmount == null || winAmount == undefined) {
+        defaultWinAmount = 100;
+    } else {
+        defaultWinAmount = parseInt(winAmount);
+
+    }
+}
+
+function playerTurnChange() {
+    if (playerTurn > playerAmount) {
+        playerTurn = 0
+    } else {
+        playerTurn += 1
+    }
+
 }
 
 
@@ -64,12 +149,14 @@ function newPlayer(name) {
 }
 
 function roll() {
-    var roll1 = Math.floor(Math.random() * 6) + 1;
+    var roll1 = Math.floor(Math.random() * 5);
+    firstroll = roll1
+    secondtroll = roll2
     if (diceAmount == 2) {
-        var roll2 = Math.floor(Math.random() * 6) + 1;
-        return [roll1, roll2]
+        var roll2 = Math.floor(Math.random() * 5);
+        return [firstroll, secondtroll]
     } else {
-        return [roll1]
+        return firstroll
     }
 }
 class Player {
