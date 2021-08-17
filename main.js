@@ -7,7 +7,7 @@ var playerTurn = 0;
 var firstroll;
 var secondtroll;
 var points = 0;
-var firstround = 0
+
 
 function playerSetup() {
 
@@ -138,10 +138,12 @@ function setWinAmount() {
 
 function endTurn() {
     players[playerTurn].addPoints(points)
+
     document.getElementById('player' + playerTurn + 'points').innerHTML = players[playerTurn].points
     points = 0
-    
+
     if (players[playerTurn].points >= defaultWinAmount) {
+        document.getElementById('player' + playerTurn + 'points').innerHTML = players[playerTurn].points
         var endgame = confirm('Pelaaja ' + players[playerTurn].name + ' voitti pelin!')
         if (endgame == true) {
             location.reload()
@@ -155,11 +157,12 @@ function endTurn() {
 function playerTurnChange() {
     if (playerTurn == playerAmount - 1) {
         playerTurn = 0
-        document.getElementById('playerthrowpopup').innerHTML += '<p>Pelaajan ' + players[playerTurn].name + ' vuoro heittää</p>'
+        if (document.getElementById('playerthrowpopup').innerHTML != '<p>Pelaajan ' + players[playerTurn].name + ' vuoro heittää</p>') { document.getElementById('playerthrowpopup').innerHTML += '<p>Pelaajan ' + players[playerTurn].name + ' vuoro heittää</p>' }
+
         document.getElementById('potentialPoints').innerHTML = '<br> <p> Tämän vuoron mahdolliset pisteet: ' + points + '</p>'
     } else {
         playerTurn += 1
-        document.getElementById('playerthrowpopup').innerHTML += '<p>Pelaajan ' + players[playerTurn].name + ' vuoro heittää</p>'
+        if (document.getElementById('playerthrowpopup').innerHTML != '<p>Pelaajan ' + players[playerTurn].name + ' vuoro heittää</p>') { document.getElementById('playerthrowpopup').innerHTML += '<p>Pelaajan ' + players[playerTurn].name + ' vuoro heittää</p>' }
         document.getElementById('potentialPoints').innerHTML = '<br> <p> Tämän vuoron mahdolliset pisteet: ' + points + '</p>'
     }
 
