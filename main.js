@@ -102,11 +102,13 @@ function playerRoll() {
                 playerTurnChange()
             } else {
                 if (firstroll == 0 && secondtroll == 0) {
+                    tuplat = tuplat + 1;
                     points = points + 25
                 } else if (firstroll == secondtroll && firstroll != 0) {
                     points = points + (((firstroll + 1) + (secondtroll + 1)) * 2)
                     tuplat = tuplat + 1;
                     if (tuplat == 3) {
+                        document.getElementById("playerthrowpopup").innerHTML = '<p style="color:red; font-weight: bold;">' + players[playerTurn].name + ' heitti kolme kertaa peräkkäin tuplat! vuoro päättyy </p>'
                         points = 0;
                         playerTurnChange()
                     }
