@@ -24,29 +24,33 @@ function playerNames() {
     } else {
         document.getElementById('gameContainer').innerHTML = '';
         for (let i = 1; i <= playerAmount; i++) {
-            document.getElementById('gameContainer').innerHTML += '<label for="playername' + i + '">Pelaajan ' + i + ' Nimi: </label><input type=text id="playername' + i + '"/><button onclick="newPlayer(playername' + i + '.value), hidden">OK</button> <br>'
+            document.getElementById('gameContainer').innerHTML += '<label for="playername' + i + '">Pelaajan ' + i + ' Nimi: </label><input type=text id="playername' + i + '"/> <br>'
         }
-        document.getElementById('gameContainer').innerHTML += '<br> <button class="btn-game" onclick="checkIfValid()">Jatka</button> <br> <p> HUOM! lisää nimet järjestyksessä </p><br>'
+        document.getElementById('gameContainer').innerHTML += '<br> <button class="btn-game" onclick="checkIfValid()">Jatka</button>'
     }
 }
 
 function checkIfValid() {
-    var x = 0
 
-    for (var i = 0; i < playerAmount; i++) {
-        if (players[i] == undefined) {
 
-            alert("Pelaajalla " + (i + 1) + " ei ole nimeä, anna nimi ennenkuin jatkat!")
+
+    for (let i = 1; i <= playerAmount; i++) {
+        var playername = document.getElementById('playername' + i).value
+        if (playername == '') {
+            alert('Pelaajalla ' + i + ' ei ole nimeä, syötä nimi!')
         } else {
-
-            x++;
+            var y = new Player(playername)
+            players.push(y)
         }
 
+
     }
-    if (x >= playerAmount) {
-        diceSetup()
-    }
+    diceSetup()
 }
+
+
+
+
 
 function diceSetup() {
     document.getElementById('gameContainer').innerHTML = '<Button class="btn-game" onclick="diceAmount=1, winAmountSetup()">1 Noppa</button> <br> <br> <Button class="btn-game" onclick="diceAmount=2, winAmountSetup()">2 Noppaa</button>'
@@ -200,17 +204,6 @@ function setPlayerAmount() {
 
 }
 
-function newPlayer(name) {
-    if (name == "") {
-        alert('Anna Nimi!')
-    } else {
-        var player = new Player(name);
-
-        players.push(player);
-    }
-
-
-}
 
 function roll() {
     var roll1 = Math.floor(Math.random() * 5);
