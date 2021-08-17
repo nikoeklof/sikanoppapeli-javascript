@@ -7,7 +7,7 @@ var playerTurn = 0;
 var firstroll;
 var secondtroll;
 var points = 0;
-
+var tuplat;
 
 function playerSetup() {
 
@@ -105,6 +105,11 @@ function playerRoll() {
                     points = points + 25
                 } else if (firstroll == secondtroll && firstroll != 0) {
                     points = points + (((firstroll + 1) + (secondtroll + 1)) * 2)
+                    tuplat = tuplat + 1;
+                    if (tuplat == 3) {
+                        points = 0;
+                        playerTurnChange()
+                    }
                 } else {
                     points = points + ((firstroll + 1) + (secondtroll + 1))
                 }
