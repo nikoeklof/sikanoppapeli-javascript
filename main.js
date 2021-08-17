@@ -112,6 +112,7 @@ function playerRoll() {
                     }
                 } else {
                     points = points + ((firstroll + 1) + (secondtroll + 1))
+                    tuplat = 0;
                 }
                 document.getElementById('potentialPoints').innerHTML = '<br> <p> Tämän vuoron mahdolliset pisteet: ' + points + '</p>'
             }
