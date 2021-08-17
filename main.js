@@ -32,7 +32,7 @@ function playerNames() {
 
 function checkIfValid() {
 
-
+    var namesvalid = true
 
     for (let i = 1; i <= playerAmount; i++) {
         var playername = document.getElementById('playername' + i).value
@@ -45,7 +45,14 @@ function checkIfValid() {
 
 
     }
-    diceSetup()
+    for (let i = 0; i <= playerAmount; i++) {
+        if (players[i] == undefined) {
+            namesvalid = false
+            break;
+        }
+    }
+    if (namesvalid == true) { diceSetup() }
+
 }
 
 
