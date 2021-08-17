@@ -8,6 +8,7 @@ var firstroll;
 var secondtroll;
 var points = 0;
 var tuplat;
+var rolled = false;
 
 function playerSetup() {
 
@@ -59,7 +60,9 @@ function winAmountSetup() {
 
 function playerRoll() {
     roll()
+    rolled = true;
     document.getElementById("playerthrowpopup").innerHTML = ''
+    document.getElementById("playerturnpopup").innerHTML = ''
     document.getElementById("diceContainer").innerHTML = dices[firstroll];
     if (diceAmount == 2) {
         document.getElementById("diceContainer").innerHTML += dices[secondtroll];
@@ -137,12 +140,13 @@ function startGame() {
         document.getElementById("diceContainer").innerHTML = dices[firstroll]
     }
 
-    document.getElementById("gameContainer").innerHTML += '<br><br><button class="btn-game" onclick="playerRoll()">Heitä</button> <button class="btn-game" onclick="endTurn()">Lopeta vuoro</button> <br> <div id="potentialPoints"></div> <br> <div id="playerthrowpopup"></div>'
+    document.getElementById("gameContainer").innerHTML += '<br><br><button class="btn-game" onclick="playerRoll()">Heitä</button> <button class="btn-game" onclick="endTurn()">Lopeta vuoro</button> <br> <div id="potentialPoints"></div> <br> <div id="playerthrowpopup"></div> <br> <div id="playerturnpopup"></div>'
+
 }
 
 function setWinAmount() {
     var winAmount = document.getElementById('winAmount').value
-    if (winAmount == null || winAmount == undefined) {
+    if (isNaN(winAmount) == true) {
         defaultWinAmount = 100;
     } else {
         defaultWinAmount = parseInt(winAmount);
@@ -151,32 +155,38 @@ function setWinAmount() {
 }
 
 function endTurn() {
-    players[playerTurn].addPoints(points)
+    if (rolled == false) {
+        alert('Et voi päättää vuoroa ilman heittoa!')
+    } else {
+        players[playerTurn].addPoints(points)
 
-    document.getElementById('player' + playerTurn + 'points').innerHTML = players[playerTurn].points
-    points = 0
-
-    if (players[playerTurn].points >= defaultWinAmount) {
         document.getElementById('player' + playerTurn + 'points').innerHTML = players[playerTurn].points
-        var endgame = confirm('Pelaaja ' + players[playerTurn].name + ' voitti pelin!')
-        if (endgame == true) {
-            location.reload()
-        } else {
-            location.reload()
+        points = 0
+
+        if (players[playerTurn].points >= defaultWinAmount) {
+            document.getElementById('player' + playerTurn + 'points').innerHTML = players[playerTurn].points
+            var endgame = confirm('Pelaaja ' + players[playerTurn].name + ' voitti pelin!')
+            if (endgame == true) {
+                location.reload()
+            } else {
+                location.reload()
+            }
         }
+        playerTurnChange()
     }
-    playerTurnChange()
+
 }
 
 function playerTurnChange() {
+    rolled = false
     if (playerTurn == playerAmount - 1) {
         playerTurn = 0
-        if (document.getElementById('playerthrowpopup').innerHTML != '<p>Pelaajan ' + players[playerTurn].name + ' vuoro heittää</p>') { document.getElementById('playerthrowpopup').innerHTML += '<p>Pelaajan ' + players[playerTurn].name + ' vuoro heittää</p>' }
+        if (document.getElementById('playerturnpopup').innerHTML == '') { document.getElementById('playerturnpopup').innerHTML += '<p>Pelaajan ' + players[playerTurn].name + ' vuoro heittää</p>' }
 
         document.getElementById('potentialPoints').innerHTML = '<br> <p> Tämän vuoron mahdolliset pisteet: ' + points + '</p>'
     } else {
         playerTurn += 1
-        if (document.getElementById('playerthrowpopup').innerHTML != '<p>Pelaajan ' + players[playerTurn].name + ' vuoro heittää</p>') { document.getElementById('playerthrowpopup').innerHTML += '<p>Pelaajan ' + players[playerTurn].name + ' vuoro heittää</p>' }
+        if (document.getElementById('playerturnpopup').innerHTML == '') { document.getElementById('playerturnpopup').innerHTML += '<p>Pelaajan ' + players[playerTurn].name + ' vuoro heittää</p>' }
         document.getElementById('potentialPoints').innerHTML = '<br> <p> Tämän vuoron mahdolliset pisteet: ' + points + '</p>'
     }
 
