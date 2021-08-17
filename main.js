@@ -12,15 +12,21 @@ var points = 0;
 function playerSetup() {
 
     document.getElementById('gameContainer').innerHTML = '<label for="playerAmount">Anna Pelaajamäärä: </label> <input type=text id="playerAmount"/><button onclick="setPlayerAmount(), playerNames()">OK</button>'
+
 }
 
 function playerNames() {
-    document.getElementById('gameContainer').innerHTML = '';
-    for (let i = 1; i <= playerAmount; i++) {
-        document.getElementById('gameContainer').innerHTML += '<label for="playername' + i + '">Pelaajan ' + i + ' Nimi: </label><input type=text id="playername' + i + '"/><button onclick="newPlayer(playername' + i + '.value), hidden">OK</button> <br>'
-    }
-    document.getElementById('gameContainer').innerHTML += '<br> <button class="btn-game" onclick="checkIfValid()">Jatka</button> <br> <p> HUOM! lisää nimet järjestyksessä </p><br>'
+    if (isNaN(playerAmount) == true) {
 
+        alert('Kirjoita pelaajamäärä numeroina!')
+        playerSetup()
+    } else {
+        document.getElementById('gameContainer').innerHTML = '';
+        for (let i = 1; i <= playerAmount; i++) {
+            document.getElementById('gameContainer').innerHTML += '<label for="playername' + i + '">Pelaajan ' + i + ' Nimi: </label><input type=text id="playername' + i + '"/><button onclick="newPlayer(playername' + i + '.value), hidden">OK</button> <br>'
+        }
+        document.getElementById('gameContainer').innerHTML += '<br> <button class="btn-game" onclick="checkIfValid()">Jatka</button> <br> <p> HUOM! lisää nimet järjestyksessä </p><br>'
+    }
 }
 
 function checkIfValid() {
@@ -172,6 +178,7 @@ function playerTurnChange() {
 function setPlayerAmount() {
     var amount = document.getElementById('playerAmount').value
     playerAmount = parseInt(amount);
+    console.log(playerAmount)
 
 }
 
