@@ -32,26 +32,20 @@ function playerNames() {
 
 function checkIfValid() {
 
-    var namesvalid = true
+    namesvalid = true
 
     for (let i = 1; i <= playerAmount; i++) {
         var playername = document.getElementById('playername' + i).value
         if (playername == '') {
             alert('Pelaajalla ' + i + ' ei ole nimeä, syötä nimi!')
+            namesvalid = false
         } else {
             var y = new Player(playername)
             players.push(y)
         }
-
-
-    }
-    for (let i = 0; i <= playerAmount; i++) {
-        if (players[i] == undefined) {
-            namesvalid = false
-            break;
-        }
     }
     if (namesvalid == true) { diceSetup() }
+
 
 }
 
